@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "804203123638",
+    "project_id": "chatgpt-58690",
+    "storage_bucket": "chatgpt-58690.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:804203123638:android:41bbcb95facf7e45ac6717",
+        "android_client_info": {
+          "package_name": "com.android.chatgpt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8ontaFmvTw7xkFGBDjzv1UUa8RaL0Cqs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
