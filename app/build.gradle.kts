@@ -2,9 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlinKapt) // ✅ No version declared in TOML
-    id("com.google.gms.google-services") // ✅ Firebase plugin
-    id("com.google.dagger.hilt.android") // ✅ Hilt plugin (classpath declared in root)
+    id("org.jetbrains.kotlin.kapt") // ✅ Required for Hilt compiler
+    id("com.google.gms.google-services") // ✅ Firebase services
+    id("com.google.dagger.hilt.android") // ✅ Hilt DI
 }
 
 android {
@@ -17,6 +17,7 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -31,12 +32,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 
     buildFeatures {
@@ -49,44 +50,41 @@ android {
 }
 
 dependencies {
-    // Jetpack Compose & AndroidX Core
+    // --- AndroidX / Jetpack Compose ---
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
-
-    // Compose BOM
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
-    // Firebase + Vertex AI
+    // --- Firebase + Vertex AI ---
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.vertexai)
+    implementation(libs.firebase.common.ktx)
 
-    // Gemini REST (optional)
+    // --- Ktor HTTP Client ---
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.cio)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
 
-    // Lifecycle ViewModel for Compose
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-
-    // Hilt for Dependency Injection
+    // --- Hilt Dependency Injection ---
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     implementation(libs.hilt.navigation.compose)
 
-    // Testing
+    // --- Unit & UI Testing ---
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
 
-    // Debug tools
+    // --- Debug Tools ---
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }

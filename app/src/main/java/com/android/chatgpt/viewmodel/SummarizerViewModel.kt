@@ -9,7 +9,6 @@ import kotlinx.coroutines.launch
 
 class SummarizerViewModel : ViewModel() {
 
-    // Initialize the Gemini repository without parameters
     private val repo = GeminiRepositoryImpl()
 
     private val _summary = MutableStateFlow("")
@@ -18,7 +17,12 @@ class SummarizerViewModel : ViewModel() {
     fun summarize(text: String) {
         viewModelScope.launch {
             _summary.value = "Summarizing..."
-            _summary.value = repo.summarizeArticle(text)
+            try {
+                val result = repo.summarizeArticle(text)
+                _summary.value = result ?: "No summary returned."
+            } catch (e: Exception) {
+                _summary.value = "Error: ${e.localizedMessage ?: "Something went wrong"}"
+            }
         }
     }
 }
